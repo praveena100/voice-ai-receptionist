@@ -1,4 +1,12 @@
-# Production Voice AI Receptionist
+# 🎙️ Production Real-Time Voice AI Receptionist
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![LiveKit Agents](https://img.shields.io/badge/LiveKit-Agents%20SDK-black.svg)](https://livekit.io/)
+[![Groq LPU](https://img.shields.io/badge/Groq-LPU%20Inference-orange.svg)](https://groq.com/)
+[![Deepgram](https://img.shields.io/badge/Deepgram-Nova--2-purple.svg)](https://deepgram.com/)
+[![Cartesia](https://img.shields.io/badge/Cartesia-Sonic%20TTS-cyan.svg)](https://cartesia.ai/)
+[![Google Calendar](https://img.shields.io/badge/Google%20Calendar-API%20v3-green.svg)](https://developers.google.com/calendar)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A production-grade, real-time Voice AI Receptionist designed to handle live telephone conversations with **under-500ms voice response latency**, instant **barge-in (interruption handling)**, and direct appointment scheduling into **Google Calendar**.
 
@@ -7,12 +15,12 @@ A production-grade, real-time Voice AI Receptionist designed to handle live tele
 ## ⚡ Architectural Overview & Tech Stack
 
 ```
-[ Caller Audio ] 
+[ Caller Audio (Mic/Phone) ] 
        │ (WebRTC Bi-directional Audio Stream)
        ▼
 ┌────────────────────────────────────────────────────────┐
 │               LiveKit Agents SDK (Python)              │
-│  - WebRTC Transport & Room Management                  │
+│  - WebRTC Transport & Session Lifecycle                │
 │  - Silero VAD (Voice Activity Detection & Barge-in)    │
 │  - Conversational Turn Detector & Pipeline Controller  │
 └──────┬──────────────────────┬───────────────────┬──────┘
@@ -20,8 +28,8 @@ A production-grade, real-time Voice AI Receptionist designed to handle live tele
        ▼                      ▼                   │
 ┌──────────────┐       ┌──────────────┐    ┌──────────────┐
 │   Deepgram   │       │   Groq LPU   │    │   Cartesia   │
-│    Nova-2    │──────▶│  gpt-oss-120b│───▶│    Sonic     │
-│ (Streaming   │ Text  │  (or 70B)    │Text│ (Streaming   │
+│    Nova-2    │──────▶│gpt-oss-20b/70b───▶│    Sonic     │
+│ (Streaming   │ Text  │ Ultra-Fast   │Text│ (Streaming   │
 │     STT)     │       │ (OpenAI API) │    │     TTS)     │
 └──────────────┘       └──────┬───────┘    └──────────────┘
                               │
@@ -52,10 +60,12 @@ A production-grade, real-time Voice AI Receptionist designed to handle live tele
 ```
 voice-receptionist/
 ├── .env.example              # Environment variables template
+├── .gitignore                # Git ignore rules (protects credentials and secrets)
 ├── requirements.txt          # Python dependencies
-├── credentials.json.example  # Example Google Service Account credentials structure
 ├── calendar_tool.py          # Google Calendar Manager & diagnostic tool
 ├── agent.py                  # Main LiveKit VoicePipelineAgent worker script
+├── Dockerfile                # Production Docker container build
+├── docker-compose.yml        # Multi-container / VPS 1-click deployment
 └── README.md                 # Setup, configuration, and testing guide
 ```
 
@@ -122,6 +132,7 @@ LIVEKIT_API_SECRET=your_livekit_api_secret
 
 # Groq LPU
 GROQ_API_KEY=gsk_your_groq_api_key
+GROQ_MODEL=openai/gpt-oss-20b
 
 # Deepgram STT
 DEEPGRAM_API_KEY=your_deepgram_api_key
