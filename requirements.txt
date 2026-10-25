@@ -1,0 +1,24 @@
+# LiveKit Core Framework & Transport
+livekit-agents>=0.8.0,<1.0.0
+
+# Speech-to-Text (STT): Deepgram Streaming
+livekit-plugins-deepgram>=0.5.0
+
+# Text-to-Speech (TTS): Cartesia Sonic Ultra-Low Latency
+livekit-plugins-cartesia>=0.4.0
+
+# AI Brain (LLM): OpenAI-compatible client endpoint for Groq LPU
+livekit-plugins-openai>=0.7.0
+
+# Voice Activity Detection (VAD) & Interruption/Barge-in Handling
+livekit-plugins-silero>=0.6.0
+
+# Business Logic & Calendar Tools
+google-api-python-client>=2.100.0
+google-auth>=2.20.0
+google-auth-httplib2>=0.2.0
+
+# Configuration & Time Utilities
+python-dotenv>=1.0.0
+python-dateutil>=2.8.2
+pytz>=2024.1

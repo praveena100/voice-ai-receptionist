@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  voice-receptionist:
+    build: .
+    container_name: voice-ai-receptionist
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./credentials.json:/app/credentials.json:ro
+    environment:
+      - PYTHONUNBUFFERED=1
